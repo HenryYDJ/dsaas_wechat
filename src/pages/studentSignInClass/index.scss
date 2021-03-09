@@ -1,0 +1,27 @@
+page{
+  height: 100%;
+}
+.studentSignInClass{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.signBox{
+  margin:0 auto;
+  height: 400px;
+  width: 400px;
+  background-color: green;
+  border-radius: 100%;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.signInModal{
+  font-size: 32px;
+  color: white;
+  text-align: center;
+}
