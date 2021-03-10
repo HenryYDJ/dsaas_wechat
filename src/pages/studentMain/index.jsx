@@ -2,7 +2,7 @@ import Nerv, { Component } from 'nervjs'
 import { View, Text } from '@tarojs/components'
 import './index.scss'
 import { AtList,AtListItem } from 'taro-ui'
-import { AtCurtain } from 'taro-ui'
+
 import Taro from '@tarojs/taro'
 
 export default class Studentmain extends Component {

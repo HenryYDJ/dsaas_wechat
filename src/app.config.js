@@ -2,7 +2,9 @@ export default {
   pages: [
     'pages/index/index',
     'pages/studentMain/index',
-    'pages/studentSignInClass/index'
+    'pages/studentSignInClass/index',
+    'pages/StudentList/index',
+    'pages/ClassList/index'
   ],
   window: {
     backgroundTextStyle: 'light',

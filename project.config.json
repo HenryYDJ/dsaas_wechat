@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "myDemoApp",
+  "projectname": "课程管理",
   "description": "",
-  "appid": "touristappid",
+  "appid": "wxc03960edcdb68e4e",
   "setting": {
     "urlCheck": true,
     "es6": false,

@@ -21,11 +21,16 @@ export default class Index extends Component {
       url: '/pages/studentMain/index'
     })
   }
+  goClassPage () {
+    Taro.navigateTo({
+      url: '/pages/ClassList/index'
+    })
+  }
   render () {
     return (
       <View className='index'>
         <AtButton type='primary' onClick={this.goStudentPage}>我是学生</AtButton>
-        <AtButton type='primary'>我是老师</AtButton>
+        <AtButton type='primary' onClick={this.goClassPage}>我是老师</AtButton>
         <AtButton type='primary'>我是管理员</AtButton>
       </View>
     )
