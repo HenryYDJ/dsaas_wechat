@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<!-- 孪生素数就是指相差为2的素数对，例如3和5，5和7，11和13……
+输入N，输出N以内的素数对个数，N<=1000000 -->
+<script>
+  function getAllPairs(n){
+    var total = 0
+    var prevSu = null
+    for(var i=3;i<=n;i+=2){
+      if(checkIsSu(i)){
+        if(prevSu && i - prevSu == 2) {
+          total++
+        }
+        prevSu = i
+      }
+    }
+    return total
+  }
+  function checkIsSu(n){
+    for(var i=2,l=Math.pow(n,1/2);i<=l;i++){
+      if(n%i==0){
+        return false
+      }
+    }
+    return true
+  }
+  console.log(getAllPairs(1000000))
+</script>
+</html>

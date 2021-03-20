@@ -1,0 +1,93 @@
+
+<div>
+  <input type='text' onchange=''/>
+</div>
+提交：<input type='button'/>
+
+<script>
+
+  
+// a²+b²=c²
+// 一组素勾股数（a、b、c）是指a、b、c互质，且满足a²+b²=c²，
+// 求N（小于等于1000000）以内素勾股书个数。
+
+
+
+// c = (m+n)^2 = m^2 + 2*m*n + n^2
+function getResult(n) {
+  var total = 0
+  var suMap = getAllSuShu(n)
+  console.log(suMap)
+  var len = suMap.length
+  for (var i=0;i<len-1;i++){
+    for (var j=0;j<len-1;j++){
+      for (var k=1;k<len;k++){
+        var a = suMap[i]
+        var b = suMap[j]
+        var c = suMap[k]
+        if (Math.pow(a,2) + Math.pow(b,2) === Math.pow(c,2)){
+          total++
+          console.log(a,b,c)
+        }
+        if (Math.pow(a,2) + Math.pow(b,2) < Math.pow(c,2)){
+          break
+        }
+      }
+    }
+  }
+  return total
+}
+function getAllSuShu(n) {
+  var all = []
+  for(var i=1;i<=n;i++){
+     if (checkIsSuShu(i)) {
+       all.push(i)
+     }
+  }
+  return all
+}
+function checkIsSuShu(n) {
+  if (n == 1){
+    return true
+  }
+  for(var i=3;i<=n/2;i++){
+    if(n/i === Math.floor(n/i)) {
+      return false
+    }
+  }
+  return true
+}
+
+// 素勾股数满足a=m^2-n^2,b=2mn,c=m^2+n^2,m和n互质，m和n必有一个是偶数
+
+function getResult2(n) {
+  var total = 0
+  for(var i=1;i<n/2;i++)
+  {
+    for(var j=i+1;j<n/2;j++) {
+      if(j/i == Math.floor(j/i) && i>1){
+        break
+      }
+      if (j%2 !=0 && i%2 != 0){
+        break
+      }
+      var c = Math.pow(i,2) + Math.pow(j,2)
+      var a = Math.pow(j,2) - Math.pow(i,2)
+      var b = 2 * i * j
+      if (Math.pow(a,2) + Math.pow(b,2) === Math.pow(c,2) && c<=n){
+        total++
+      }
+      if (a>n || b>n || c>n) {
+        break
+      }
+    }
+  }
+  return total
+}
+
+var arr=[10,100,1000,10000,100000,1000000]
+for(var i=0;i<arr.length;i++){
+  var n =arr[i]
+  console.log(n+':结果='+getResult2(n))
+}
+</script>

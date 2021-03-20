@@ -1,14 +1,40 @@
 import Nerv, { Component } from 'nervjs'
-import { View, Text } from '@tarojs/components'
+import { View, Text,Map } from '@tarojs/components'
 import './index.scss'
 import { AtButton } from 'taro-ui'
 import Taro from '@tarojs/taro'
+import iconPath from '../../images/location.png'
 
 export default class Index extends Component {
+  constructor(){
+    super(...arguments)
+    this.state = {
+      markers: [{
+        id:1,
+        latitude:34.6,
+        longitude:113.6,
+        iconPath
+      },
+      {
+        id:2,
+        latitude:34.6001,
+        longitude:113.6001,
+        iconPath
+      }]
+    }
+  }
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () { 
+    setTimeout(()=>{
+      this.setState({
+        markers:[
+         
+        ]
+      })
+    },10000)
+  }
 
   componentWillUnmount () { }
 
@@ -23,7 +49,7 @@ export default class Index extends Component {
   }
   goClassPage () {
     Taro.navigateTo({
-      url: '/pages/ClassList/index'
+      url: '/pages/classList/index'
     })
   }
   render () {

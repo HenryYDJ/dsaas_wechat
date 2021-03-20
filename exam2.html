@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .highlight{
+      color:yellow;
+    }
+  </style>
+</head>
+<body>
+  <input type='text' id='myInput'/>
+  <input type='button' onclick='selectText()' value='选中'/>
+  <div id='myText'>
+      abc123def456中国123
+  </div>
+</body>
+<script>
+  var myText = document.querySelector('#myText')
+  var myInput = document.querySelector('#myInput')
+  var myTextContent = myText.innerHTML
+  function selectText(){
+    var text = myInput.value
+    var reg = new RegExp(text,'g')
+    var content = myTextContent.replace(reg,function(match){
+      return '<span class="highlight">'+match+'</span>'
+    })
+    myText.innerHTML = content
+  }
+</script>
+</html>

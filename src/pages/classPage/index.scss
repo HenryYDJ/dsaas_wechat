@@ -1,0 +1,32 @@
+.bottom-op{
+  position: absolute;
+  left: 0;
+  right:0;
+  bottom: 0;
+  .at-button{
+    background-color: white;
+  }
+}
+page{
+  height: 100%;
+}
+.page-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.at-tabs__body{
+
+}
+
+.top-tabs{
+  display: flex;
+  flex-direction: column;
+}
+.at-tabs__body,.top-body{
+  height: 100%;
+}
+.content{
+  flex:1;
+  height: 100%;
+}

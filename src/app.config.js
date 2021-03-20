@@ -3,12 +3,13 @@ export default {
     'pages/index/index',
     'pages/studentMain/index',
     'pages/studentSignInClass/index',
-    'pages/StudentList/index',
-    'pages/ClassList/index'
+    'pages/studentList/index',
+    'pages/classList/index',
+    'pages/classPage/index'
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
+    navigationBarBackgroundColor: '#afdfd6',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
   },

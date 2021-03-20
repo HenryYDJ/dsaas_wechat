@@ -20,7 +20,7 @@ export default class Classlist extends Component {
   goToDetail (item) {
     console.log(item)
     Taro.navigateTo({
-      url: '/pages/StudentList/index?id='+item.id
+      url: '/pages/classPage/index?id='+item.id
     })
   }
 
@@ -57,7 +57,7 @@ export default class Classlist extends Component {
     ]
     return (
       <View className='ClassList'>
-        <AtGrid data={classList.map(t=>{return {value:t.name,id:t.id} })} onClick={this.goToDetail.bind(this)}/>
+        <AtGrid mode='rect' data={classList.map(t=>{return {value:t.name,id:t.id} })} onClick={this.goToDetail.bind(this)}/>
       </View>
     )
   }
