@@ -4,3 +4,25 @@
     margin-bottom: 40px;
   }
 }
+.user-text{
+  display: flex;
+  open-data{
+    flex-grow: 0;
+  }
+}
+.head-box{
+  display: flex;
+  align-items: center;
+  margin: 0 10px 10px;
+  image{
+    height:50px;
+    width:50px;
+    border-radius: 100%;
+  }
+}
+.user-head{
+  width: 120px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+}

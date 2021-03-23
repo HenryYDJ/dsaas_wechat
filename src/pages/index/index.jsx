@@ -1,5 +1,5 @@
 import Nerv, { Component } from 'nervjs'
-import { View, Text,Map } from '@tarojs/components'
+import { View, Text,Map,OpenData,Image } from '@tarojs/components'
 import './index.scss'
 import { AtButton } from 'taro-ui'
 import Taro from '@tarojs/taro'
@@ -9,6 +9,9 @@ export default class Index extends Component {
   constructor(){
     super(...arguments)
     this.state = {
+      userInfo:{
+
+      },
       markers: [{
         id:1,
         latitude:34.6,
@@ -52,9 +55,23 @@ export default class Index extends Component {
       url: '/pages/classList/index'
     })
   }
+  onGetUserInfo(detail){
+    this.setState({
+      userInfo:detail.detail.userInfo
+    })
+  }
   render () {
     return (
       <View className='index'>
+        <View className='head-box'>
+          <View className='user-text'>
+            <Text>你好</Text>{this.state.userInfo.nickName}<Text>，欢迎您!</Text>
+          </View>
+          <View className='user-head'>
+          <Image src={this.state.userInfo.avatarUrl} mode='aspectFit'/>
+          </View>
+        </View>
+        <AtButton openType='getUserInfo' onGetUserInfo={this.onGetUserInfo.bind(this)} type='primary'>登录</AtButton>
         <AtButton type='primary' onClick={this.goStudentPage}>我是学生</AtButton>
         <AtButton type='primary' onClick={this.goClassPage}>我是老师</AtButton>
         <AtButton type='primary'>我是管理员</AtButton>
