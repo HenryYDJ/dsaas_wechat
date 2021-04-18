@@ -1,7 +1,8 @@
 import { Component } from 'nervjs'
 import './app.scss'
 import Taro from '@tarojs/taro'
-import { getToken } from './utils'
+import { getToken,setToken } from './utils'
+import { API_MAP } from './api'
 class App extends Component {
 
   componentDidMount () {
@@ -15,12 +16,22 @@ class App extends Component {
           console.log(res)
           if (res.code) {
             // //发起网络请求
-            // Taro.request({
-            //   url: 'https://test.com/onLogin',
-            //   data: {
-            //     code: res.code
-            //   }
-            // })
+            Taro.request({
+              url: API_MAP.wechat_login,
+              method: 'post',
+              data: {
+                code: res.code,
+                // "phone": "132",
+                // "name": "hi",
+                // "password": "123456"
+              },
+              success(res){
+                setToken(res.data.access_token)
+              },
+              error(err){
+                console.log(err)
+              }
+            })
           } else {
             console.log('登录失败！' + res.errMsg)
           }

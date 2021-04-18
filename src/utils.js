@@ -1,3 +1,5 @@
+import Taro from '@tarojs/taro'
+
 const TOKEN_KEY = 'access_token'
 const VALID_SECONDS = 86400*2.8 // = 2.8d
 const TOKEN_TIME_SPLIT = '###'

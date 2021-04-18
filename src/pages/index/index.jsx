@@ -51,8 +51,14 @@ export default class Index extends Component {
     })
   }
   goClassPage () {
+    // TODO teacherPage
     Taro.navigateTo({
-      url: '/pages/classList/index'
+      url: '/pages/createTeacher/index'
+    })
+  }
+  goAdminPage(){
+    Taro.navigateTo({
+      url: '/pages/adminTabs/index'
     })
   }
   onGetUserInfo(detail){
@@ -68,13 +74,13 @@ export default class Index extends Component {
             <Text>你好</Text>{this.state.userInfo.nickName}<Text>，欢迎您!</Text>
           </View>
           <View className='user-head'>
-          <Image src={this.state.userInfo.avatarUrl} mode='aspectFit'/>
+          <Image src={this.state.userInfo.avatarUrl} mode='aspectFit  '/>
           </View>
         </View>
         <AtButton openType='getUserInfo' onGetUserInfo={this.onGetUserInfo.bind(this)} type='primary'>登录</AtButton>
         <AtButton type='primary' onClick={this.goStudentPage}>我是学生</AtButton>
         <AtButton type='primary' onClick={this.goClassPage}>我是老师</AtButton>
-        <AtButton type='primary'>我是管理员</AtButton>
+        <AtButton type='primary' onClick={this.goAdminPage}>我是管理员</AtButton>
       </View>
     )
   }

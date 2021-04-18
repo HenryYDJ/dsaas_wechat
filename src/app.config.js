@@ -5,11 +5,14 @@ export default {
     'pages/studentSignInClass/index',
     'pages/studentList/index',
     'pages/classList/index',
-    'pages/classPage/index'
+    'pages/classPage/index',
+    'pages/createTeacher/index',
+    'pages/createLession/index',
+    'pages/adminTabs/index'
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#afdfd6',
+    navigationBarBackgroundColor: '#84abf4',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
   },
