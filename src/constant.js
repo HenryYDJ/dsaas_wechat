@@ -1,3 +1,5 @@
+import Taro from '@tarojs/taro'
+
 export const GENDERS = [
   {
     value:1,
@@ -7,3 +9,5 @@ export const GENDERS = [
     name:'女'
   }
 ]
+
+export const MENU_BTN_INFO = Taro.getMenuButtonBoundingClientRect()

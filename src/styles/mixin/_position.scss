@@ -1,0 +1,135 @@
+@mixin absolute-element($top:0, $left:0, $right:0, $bottom:0) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+}
+
+/*垂直居中，水平居中*/
+
+@mixin center-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/*垂直居中，水平靠右*/
+
+@mixin top-center-right-element($right:0px) {
+  position: absolute;
+  top: 50%;
+  right: $right;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+/*垂直居中，默认水平靠左，或者传值*/
+
+@mixin top-center-left-element($left:0px) {
+  position: absolute;
+  top: 50%;
+  left: $left;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+/*水平居中，默认垂直靠顶部，或者传值*/
+
+@mixin left-center-top-element($top:0px) {
+  position: absolute;
+  top: $top;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+@mixin user-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* 左边固定，主体部分自适应,默认左边100px*/
+
+@mixin left-main-container($left:100px, $rowPadding:4px, $mainElementPaddingRight:10px) {
+  >.row-element {
+      position: relative;
+      padding: $rowPadding 0;
+      padding-left: $left;
+      zoom: 1;
+      line-height: normal;
+      &:after {
+          clear: both;
+          content: "";
+          height: 0;
+          display: block;
+      }
+      >.left-element {
+          float: left;
+          margin-left: -$left;
+          width: $left;
+      }
+      >.main-element {
+          float: left;
+          padding-right: $mainElementPaddingRight;
+          box-sizing: border-box;
+          width: 100%;
+      }
+  }
+}
+
+/* 左边固定，右边固定，主体部分自适应,默认左右边100px*/
+
+@mixin left-main-right-container($left:100px, $rowPadding:4px, $mainElementPaddingRight:10px, $right:100px) {
+  >.row-element {
+      position: relative;
+      padding: $rowPadding 0;
+      padding-left: $left;
+      padding-right: $right;
+      zoom: 1;
+      line-height: normal;
+      &:after {
+          clear: both;
+          content: "";
+          height: 0;
+          display: block;
+      }
+      >.left-element {
+          float: left;
+          margin-left: -$left;
+          width: $left;
+      }
+      >.main-element {
+          float: left;
+          padding-right: $mainElementPaddingRight;
+          box-sizing: border-box;
+          width: 100%;
+      }
+      >.right-element {
+          float: left;
+          margin-right: -$right;
+          width: $right;
+      }
+  }
+}
+
+@mixin marginWithLineHeight($attr,$val,$fonSize,$lineHeight) {
+  #{$attr}:$val - ($lineHeight*$fonSize - $fonSize)/2;
+}

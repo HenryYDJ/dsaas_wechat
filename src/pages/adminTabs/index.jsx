@@ -2,7 +2,9 @@ import Nerv, { Component } from 'nervjs'
 import { View, Text } from '@tarojs/components'
 import './index.scss'
 import { AtTabBar,AtButton,AtList,AtListItem,AtFab }  from 'taro-ui'
-
+import Taro from '@tarojs/taro'
+import TeachList from '../../components/teachList'
+import NavBar from '../../components/navbar'
 export default class Admintabs extends Component {
   constructor () {
     super(...arguments)
@@ -13,6 +15,11 @@ export default class Admintabs extends Component {
   handleClick (value) {
     this.setState({
       current: value
+    })
+  }
+  goAddLessionPage(){
+    Taro.navigateTo({
+      url: '/pages/createLession/index'
     })
   }
   componentWillMount () { }
@@ -27,15 +34,20 @@ export default class Admintabs extends Component {
 
   render () {
     return (
-      <View className='adminTabs'>
-        <AtFab className='right-tab' size='small'>
-          <Text className='at-fab__icon at-icon at-icon-add'></Text>
-        </AtFab>
+      <View>
+        <NavBar></NavBar>
+        <View className='adminTabs'>
+        {
+           this.state.current == 0 ? <AtFab className='right-tab' size='small' onClick={this.goAddLessionPage.bind(this)}>
+            <Text className='at-fab__icon at-icon at-icon-add'></Text>
+          </AtFab> : null
+        }
         <AtList>
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
         </AtList>
+        <TeachList></TeachList>
         <AtTabBar
         tabList={[
           { title: '管理课程', text:12 },
@@ -45,6 +57,7 @@ export default class Admintabs extends Component {
         onClick={this.handleClick.bind(this)}
         current={this.state.current}
       />
+      </View>
       </View>
     )
   }

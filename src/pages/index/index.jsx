@@ -62,6 +62,7 @@ export default class Index extends Component {
     })
   }
   onGetUserInfo(detail){
+    console.log(detail)
     this.setState({
       userInfo:detail.detail.userInfo
     })

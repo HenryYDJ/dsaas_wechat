@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/home/index',
     'pages/index/index',
     'pages/studentMain/index',
     'pages/studentSignInClass/index',
@@ -10,11 +11,25 @@ export default {
     'pages/createLession/index',
     'pages/adminTabs/index'
   ],
+  tabBar: {
+    list: [{
+      pagePath: 'pages/home/index',
+      text: '首页'
+    }, {
+      pagePath: 'pages/index/index',
+      text: '我的'
+    }],
+    'color': '#000',
+    'selectedColor': '#56abe4',
+    'backgroundColor': '#fff',
+    'borderStyle': 'white'
+  },
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#84abf4',
     navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
+    "navigationStyle": "custom"
   },
   permission: {
     'scope.userLocation': {

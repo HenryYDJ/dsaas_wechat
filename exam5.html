@@ -1,0 +1,66 @@
+<script>
+  var Tree = function(val){
+    this.val = val
+    this.left = null
+    this.right = null
+  }
+  var routes = []
+  // 一棵树，没有重复的值，找路径
+  function getTreeRoute(tree,current,route,isRoot){
+    var top = tree
+    var result = null
+    if (isRoot) {
+      if (tree.val == current) {
+        return [tree.val]
+      } else {
+        route.push(tree.val)
+        routes.push(route)
+      }
+    }
+    if(top.left){
+      var newRoute = route.slice(0)
+      newRoute.push(top.left.val)
+      if (top.left.val == current) {
+        return newRoute
+      }
+      routes.push(newRoute)
+      result = getTreeRoute(top.left,current,newRoute)
+      // 遍历左
+    }
+    if (result) {
+      return result
+    }
+    if(top.right){
+      var newRoute = route.slice(0)
+      newRoute.push(top.right.val)
+      if (top.right.val == current) {
+        return newRoute
+      }
+      routes.push(newRoute)
+      result = getTreeRoute(top.right,current,newRoute)
+    }
+    return result
+  }
+  var testTree = {
+    val:1,
+    left:{
+      val:2,
+      right:{
+        val:22
+      }
+    },
+    right:{
+      val:3,
+      left:{
+        val:31
+      }
+    }
+  }
+
+  console.log('1---',getTreeRoute(testTree,1,[],true))
+  console.log('2---',getTreeRoute(testTree,2,[],true))
+  console.log('3---',getTreeRoute(testTree,3,[],true))
+  console.log('31---',getTreeRoute(testTree,31,[],true))
+  console.log('22---',getTreeRoute(testTree,22,[],true))
+  console.log('6---',getTreeRoute(testTree,6,[],true))
+</script>

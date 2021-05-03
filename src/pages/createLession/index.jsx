@@ -1,8 +1,9 @@
 import Nerv, { Component } from 'nervjs'
-import { View, Text } from '@tarojs/components'
+import { View, Text,Button } from '@tarojs/components'
 import './index.scss'
-import { AtForm,AtInput,AtButton,AtList,AtListItem } from "taro-ui"
-
+import {API_MAP} from '../../api'
+import { AtForm,AtInput,AtButton,AtList,AtListItem,AtTextarea } from "taro-ui"
+import Taro from '@tarojs/taro'
 export default class Createlession extends Component {
   constructor () {
     super(...arguments)
@@ -30,7 +31,24 @@ export default class Createlession extends Component {
   }
 
   onSubmit (event) {
-    console.log(this.state)
+    Taro.request({
+      url: API_MAP.create_course,
+      method: 'post',
+      data: {
+        name: this.state.name,
+      },
+      success(res){
+        console.log(res)
+        Taro.showToast({
+          title:'创建成功',
+          icon: 'success'
+        })
+        Taro.navigateBack()
+      },
+      error(err){
+        console.log(err)
+      }
+    })
   }
   onReset (event) {
     this.setState({
@@ -60,7 +78,11 @@ export default class Createlession extends Component {
             maxLength={200}
             placeholder='课程简介...'
           />
-        <AtButton formType='submit' type='primary'>提交</AtButton>
+          <View className='submitBtn'>
+            <Button size='mini' formType='submit' type='primary'>提交</Button>
+            <Button size='mini' onClick={Taro.navigateBack} type='default'>取消</Button>
+          </View>
+        {/* <AtButton formType='submit' type='primary'>提交</AtButton> */}
       </AtForm>
       </View>
     )

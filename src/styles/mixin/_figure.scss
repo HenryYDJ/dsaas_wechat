@@ -1,0 +1,30 @@
+// 图形mixin
+
+// 三角形
+@mixin triangle($length, $color) {
+  border: $length solid transparent;
+  display: inline-block;
+  border-top-color: red;
+  border-left-color: red;
+}
+// 三角形,$length为底边的长度，$color为三角形的颜色
+// 底边在上的三角形
+@mixin triangleTop($length, $color) {
+  @include triangle($length, $color);
+  transform: rotateZ(225deg);
+}
+// 底边在右的三角形
+@mixin triangleRight($length, $color) {
+  @include triangle($length);
+  transform: rotateZ(315deg);
+}
+// 底边在下的三角形
+@mixin triangleBottom($length, $color) {
+  @include triangle($length);
+  transform: rotateZ(45deg);
+}
+// 底边在左的三角形
+@mixin triangleLeft($length, $color) {
+  @include triangle($length);
+  transform: rotateZ(135deg);
+}
