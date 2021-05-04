@@ -1,6 +1,5 @@
 @import '../../styles/mixin/_position.scss';
 .nav-main {
-	background: #ffffff;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -15,6 +14,7 @@
 		height: 100%;
 		width: 150px;
 		border: 2px solid #ededed;
+    background-color: white;
 		border-radius: 100px;
 		border-radius: 100px;
 		@include top-center-left-element(18px);

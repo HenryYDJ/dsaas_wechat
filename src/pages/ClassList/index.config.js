@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '班级列表'
+  navigationBarTitleText: '课时列表'
 }

@@ -1,0 +1,19 @@
+.item{
+  display: flex;
+}
+.StudentList{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .searchBar{
+    flex-shrink: 0;
+  }
+}
+.scrollWrap{
+  flex:1;
+  overflow: hidden;
+}
+.scrollList{
+  height: 100%;
+}

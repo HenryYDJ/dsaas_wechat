@@ -1,0 +1,17 @@
+.calendar-view{
+  background-color: white;
+  padding-top: 10px;
+}
+.modal-title{
+  text-align: center;
+  line-height: 40px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.icon-add{
+  position: absolute;
+  right:20px;
+}
+.addStudentDrawer{
+  z-index: 1000;
+}

@@ -1,16 +1,19 @@
 import Nerv, { Component } from 'nervjs'
-import { View, Text,Picker } from '@tarojs/components'
+import { View, Text,Picker,Button } from '@tarojs/components'
 import './index.scss'
 import { AtForm,AtInput,AtButton,AtList,AtListItem } from "taro-ui"
-import { GENDERS } from '../../constant'
-
+import { GENDERS,getGlobalData } from '../../constant'
+import Taro from '@tarojs/taro'
+import NavBar from '../../components/navbar'
+import {API_MAP} from '../../api'
 export default class Createteacher extends Component {
   constructor () {
     super(...arguments)
     this.state = {
       name: '',
       phone: '',
-      genderChecked: ''
+      genderChecked: '',
+      isApproved: !!getGlobalData('isApproved')
     }
   }
 
@@ -28,6 +31,27 @@ export default class Createteacher extends Component {
 
   onSubmit (event) {
     console.log(this.state)
+    Taro.request({
+      url: API_MAP.create_teacher,
+      method: 'post',
+      data: {
+        realName: this.state.name,
+        phone: this.state.phone
+      },
+      success(res){
+        console.log(res)
+        Taro.showToast({
+          title:'创建成功',
+          icon: 'success'
+        })
+        // Taro.navigateBack()
+      },
+      error(err){
+        console.log(err)
+      }
+    })
+    // FIXME -- move to success logic
+    this.setState({isApproved:true})
   }
   onReset (event) {
     this.setState({
@@ -49,7 +73,9 @@ export default class Createteacher extends Component {
   }
   render () {
     return (
-      <AtForm
+      <View>
+        <NavBar></NavBar>
+      {!this.state.isApproved ? <AtForm
         onSubmit={this.onSubmit.bind(this)}
         onReset={this.onReset.bind(this)}
       >
@@ -71,7 +97,7 @@ export default class Createteacher extends Component {
           value={this.state.phone} 
           onChange={this.handleChange.bind(this, 'phone')} 
         />
-        <View className='gender-selector'>
+        {/* <View className='gender-selector'>
           <View>
             <Picker mode='selector' range={GENDERS} rangeKey='name' onChange={this.onChangeGender.bind(this)}>
             <AtInput
@@ -84,9 +110,23 @@ export default class Createteacher extends Component {
             />
             </Picker>
           </View>
+        </View> */}
+        {/* <AtButton formType='submit' type='primary'>提交</AtButton> */}
+        <View className='submitBtn'>
+            <Button size='mini' formType='submit' type='primary'>提交</Button>
+            <Button size='mini' onClick={Taro.navigateBack} type='default'>取消</Button>
         </View>
-        <AtButton formType='submit' type='primary'>提交</AtButton>
-      </AtForm>
+      </AtForm>:
+      <View className='at-article__content'>
+        <View className='at-article__section'>
+          <View className='at-article__h2'>流程处理中</View>
+          <View className='at-article__p'>
+            您的资料已提交，管理员将在2-3个工作日内审核，审核通过后可使用老师功能。
+          </View>
+        </View>
+      </View>
+      }
+      </View>
     )
   }
 }

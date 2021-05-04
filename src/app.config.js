@@ -1,11 +1,11 @@
 export default {
   pages: [
+    'pages/classList/index',
     'pages/home/index',
     'pages/index/index',
     'pages/studentMain/index',
     'pages/studentSignInClass/index',
     'pages/studentList/index',
-    'pages/classList/index',
     'pages/classPage/index',
     'pages/createTeacher/index',
     'pages/createLession/index',
