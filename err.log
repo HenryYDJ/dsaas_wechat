@@ -1,0 +1,513 @@
+sqlalchemy.exc.IntegrityError
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: teachings.session_id, teachings.teacher_id [SQL: INSERT INTO teachings (session_id, teacher_id, deleted, comments, attended) VALUES (?, ?, ?, ?, ?)] [parameters: (14, 3, 0, None, 0)] (Background on this error at: http://sqlalche.me/e/13/gkpj)
+
+Traceback (most recent call last)
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1277, in _execute_context
+                        if fn(cursor, statement, parameters, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute(
+                        cursor, statement, parameters, context
+                    )
+ 
+            if self._has_events or self.engine._has_events:
+                self.dispatch.after_cursor_execute(
+                    self,
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+ 
+    def do_executemany(self, cursor, statement, parameters, context=None):
+        cursor.executemany(statement, parameters)
+ 
+    def do_execute(self, cursor, statement, parameters, context=None):
+        cursor.execute(statement, parameters)
+ 
+    def do_execute_no_params(self, cursor, statement, context=None):
+        cursor.execute(statement)
+ 
+    def is_disconnect(self, e, connection, cursor):
+The above exception was the direct cause of the following exception:
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2464, in __call__
+ 
+    def __call__(self, environ, start_response):
+        """The WSGI server calls the Flask application object as the
+        WSGI application. This calls :meth:`wsgi_app` which can be
+        wrapped to applying middleware."""
+        return self.wsgi_app(environ, start_response)
+ 
+    def __repr__(self):
+        return "<%s %r>" % (self.__class__.__name__, self.name)
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2450, in wsgi_app
+            try:
+                ctx.push()
+                response = self.full_dispatch_request()
+            except Exception as e:
+                error = e
+                response = self.handle_exception(e)
+            except:  # noqa: B001
+                error = sys.exc_info()[1]
+                raise
+            return response(environ, start_response)
+        finally:
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1867, in handle_exception
+            # if we want to repropagate the exception, we can attempt to
+            # raise it with the whole traceback in case we can do that
+            # (the function was actually called from the except part)
+            # otherwise, we just raise the error again
+            if exc_value is e:
+                reraise(exc_type, exc_value, tb)
+            else:
+                raise e
+ 
+        self.log_exception((exc_type, exc_value, tb))
+        server_error = InternalServerError()
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    import collections.abc as collections_abc
+ 
+    def reraise(tp, value, tb=None):
+        if value.__traceback__ is not tb:
+            raise value.with_traceback(tb)
+        raise value
+ 
+    implements_to_string = _identity
+ 
+else:
+    iterkeys = lambda d: d.iterkeys()
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+        ctx = self.request_context(environ)
+        error = None
+        try:
+            try:
+                ctx.push()
+                response = self.full_dispatch_request()
+            except Exception as e:
+                error = e
+                response = self.handle_exception(e)
+            except:  # noqa: B001
+                error = sys.exc_info()[1]
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+            request_started.send(self)
+            rv = self.preprocess_request()
+            if rv is None:
+                rv = self.dispatch_request()
+        except Exception as e:
+            rv = self.handle_user_exception(e)
+        return self.finalize_request(rv)
+ 
+    def finalize_request(self, rv, from_error_handler=False):
+        """Given the return value from a view function this finalizes
+        the request by converting it into a response and invoking the
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+            return self.handle_http_exception(e)
+ 
+        handler = self._find_error_handler(e)
+ 
+        if handler is None:
+            reraise(exc_type, exc_value, tb)
+        return handler(e)
+ 
+    def handle_exception(self, e):
+        """Handle an exception that did not have an error handler
+        associated with it, or that was raised from an error handler.
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    import collections.abc as collections_abc
+ 
+    def reraise(tp, value, tb=None):
+        if value.__traceback__ is not tb:
+            raise value.with_traceback(tb)
+        raise value
+ 
+    implements_to_string = _identity
+ 
+else:
+    iterkeys = lambda d: d.iterkeys()
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+        self.try_trigger_before_first_request_functions()
+        try:
+            request_started.send(self)
+            rv = self.preprocess_request()
+            if rv is None:
+                rv = self.dispatch_request()
+        except Exception as e:
+            rv = self.handle_user_exception(e)
+        return self.finalize_request(rv)
+ 
+    def finalize_request(self, rv, from_error_handler=False):
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+            getattr(rule, "provide_automatic_options", False)
+            and req.method == "OPTIONS"
+        ):
+            return self.make_default_options_response()
+        # otherwise dispatch to the handler for that endpoint
+        return self.view_functions[rule.endpoint](**req.view_args)
+ 
+    def full_dispatch_request(self):
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+File "/Users/tom.chang/code/dingjun/flaskAPI/app/api/auth/auth_utils.py", line 124, in decorator
+            if user:
+                user_roles = user.get_role_value()
+                if user_roles >= required_roles:
+                    # If the user's role in DB is >= required roles, meaning the user has equal or above
+                    # qualification for the API
+                    return fn(*args, **kwargs)
+                else:
+                    return jsonify(msg='not qualified'), 403
+            else:
+                return jsonify(msg='no such user'), 400
+        return decorator
+File "/Users/tom.chang/code/dingjun/flaskAPI/app/api/course/course.py", line 124, in add_class_session
+            teaching.class_session = class_session
+            teaching.teacher_id = teacher_id
+ 
+            db.session.add(class_session)
+            db.session.add(teaching)
+            db.session.commit()
+            return jsonify(message="Class session added successfully"), 201
+    else:
+        return jsonify(message="Course does not exist"), 400
+ 
+ 
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/scoping.py", line 163, in do
+"""Old name for backwards compatibility."""
+ 
+ 
+def instrument(name):
+    def do(self, *args, **kwargs):
+        return getattr(self.registry(), name)(*args, **kwargs)
+ 
+    return do
+ 
+ 
+for meth in Session.public_methods:
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 1042, in commit
+            if not self.autocommit:
+                self.begin()
+            else:
+                raise sa_exc.InvalidRequestError("No transaction is begun.")
+ 
+        self.transaction.commit()
+ 
+    def prepare(self):
+        """Prepare the current transaction in progress for two phase commit.
+ 
+        If no transaction is in progress, this method raises an
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 504, in commit
+        self._state = PREPARED
+ 
+    def commit(self):
+        self._assert_active(prepared_ok=True)
+        if self._state is not PREPARED:
+            self._prepare_impl()
+ 
+        if self._parent is None or self.nested:
+            for t in set(self._connections.values()):
+                t[1].commit()
+ 
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 483, in _prepare_impl
+ 
+        if not self.session._flushing:
+            for _flush_guard in range(100):
+                if self.session._is_clean():
+                    break
+                self.session.flush()
+            else:
+                raise exc.FlushError(
+                    "Over 100 subsequent flushes have occurred within "
+                    "session.commit() - is an after_flush() hook "
+                    "creating new objects?"
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2523, in flush
+ 
+        if self._is_clean():
+            return
+        try:
+            self._flushing = True
+            self._flush(objects)
+        finally:
+            self._flushing = False
+ 
+    def _flush_warning(self, method):
+        util.warn(
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2664, in _flush
+ 
+            transaction.commit()
+ 
+        except:
+            with util.safe_reraise():
+                transaction.rollback(_capture_exception=True)
+ 
+    def bulk_save_objects(
+        self,
+        objects,
+        return_defaults=False,
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 69, in __exit__
+        if type_ is None:
+            exc_type, exc_value, exc_tb = self._exc_info
+            self._exc_info = None  # remove potential circular references
+            if not self.warn_only:
+                compat.raise_(
+                    exc_value, with_traceback=exc_tb,
+                )
+        else:
+            if not compat.py3k and self._exc_info and self._exc_info[1]:
+                # emulate Py3K's behavior of telling us when an exception
+                # occurs in an exception handler.
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+            # intermediary exception does not change, but we can't figure
+            # that out.
+            exception.__cause__ = replace_context
+ 
+        try:
+            raise exception
+        finally:
+            # credit to
+            # https://cosmicpercolator.com/2016/01/13/exception-leaks-in-python-2-and-3/
+            # as the __traceback__ object creates a cycle
+            del exception, replace_context, from_, with_traceback
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2624, in _flush
+            subtransactions=True
+        )
+        try:
+            self._warn_on_events = True
+            try:
+                flush_context.execute()
+            finally:
+                self._warn_on_events = False
+ 
+            self.dispatch.after_flush(self, flush_context)
+ 
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+                while set_:
+                    n = set_.pop()
+                    n.execute_aggregate(self, set_)
+        else:
+            for rec in topological.sort(self.dependencies, postsort_actions):
+                rec.execute(self)
+ 
+    def finalize_flush_changes(self):
+        """Mark processed objects as clean / deleted after a successful
+        flush().
+ 
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+ 
+    def execute(self, uow):
+        persistence.save_obj(
+            self.mapper,
+            uow.states_for_mapper_hierarchy(self.mapper, False, False),
+            uow,
+        )
+ 
+    def per_state_flush_actions(self, uow):
+        states = list(
+            uow.states_for_mapper_hierarchy(self.mapper, False, False)
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+            base_mapper,
+            uowtransaction,
+            cached_connections,
+            mapper,
+            table,
+            insert,
+        )
+ 
+    _finalize_insert_update_commands(
+        base_mapper,
+        uowtransaction,
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1083, in _emit_insert_statements
+        ):
+ 
+            records = list(records)
+            multiparams = [rec[2] for rec in records]
+ 
+            c = cached_connections[connection].execute(statement, multiparams)
+            if bookkeeping:
+                for (
+                    (
+                        state,
+                        state_dict,
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1011, in execute
+        except AttributeError as err:
+            util.raise_(
+                exc.ObjectNotExecutableError(object_), replace_context=err
+            )
+        else:
+            return meth(self, multiparams, params)
+ 
+    def _execute_function(self, func, multiparams, params):
+        """Execute a sql.FunctionElement object."""
+ 
+        return self._execute_clauseelement(func.select(), multiparams, params)
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+            # self
+            return self
+ 
+    def _execute_on_connection(self, connection, multiparams, params):
+        if self.supports_execution:
+            return connection._execute_clauseelement(self, multiparams, params)
+        else:
+            raise exc.ObjectNotExecutableError(self)
+ 
+    def unique_params(self, *optionaldict, **kwargs):
+        """Return a copy with :func:`_expression.bindparam` elements
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1130, in _execute_clauseelement
+            dialect,
+            dialect.execution_ctx_cls._init_compiled,
+            compiled_sql,
+            distilled_params,
+            compiled_sql,
+            distilled_params,
+        )
+        if self._has_events or self.engine._has_events:
+            self.dispatch.after_execute(self, elem, multiparams, params, ret)
+        return ret
+ 
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1317, in _execute_context
+                    # rows to fetch.
+                    result._autoclose_connection = True
+ 
+        except BaseException as e:
+            self._handle_dbapi_exception(
+                e, statement, parameters, cursor, context
+            )
+ 
+        return result
+ 
+    def _cursor_execute(self, cursor, statement, parameters, context=None):
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1511, in _handle_dbapi_exception
+ 
+            if newraise:
+                util.raise_(newraise, with_traceback=exc_info[2], from_=e)
+            elif should_wrap:
+                util.raise_(
+                    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+                )
+            else:
+                util.raise_(exc_info[1], with_traceback=exc_info[2])
+ 
+        finally:
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+            # intermediary exception does not change, but we can't figure
+            # that out.
+            exception.__cause__ = replace_context
+ 
+        try:
+            raise exception
+        finally:
+            # credit to
+            # https://cosmicpercolator.com/2016/01/13/exception-leaks-in-python-2-and-3/
+            # as the __traceback__ object creates a cycle
+            del exception, replace_context, from_, with_traceback
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1277, in _execute_context
+                        if fn(cursor, statement, parameters, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute(
+                        cursor, statement, parameters, context
+                    )
+ 
+            if self._has_events or self.engine._has_events:
+                self.dispatch.after_cursor_execute(
+                    self,
+File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+ 
+    def do_executemany(self, cursor, statement, parameters, context=None):
+        cursor.executemany(statement, parameters)
+ 
+    def do_execute(self, cursor, statement, parameters, context=None):
+        cursor.execute(statement, parameters)
+ 
+    def do_execute_no_params(self, cursor, statement, context=None):
+        cursor.execute(statement)
+ 
+    def is_disconnect(self, e, connection, cursor):
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: teachings.session_id, teachings.teacher_id [SQL: INSERT INTO teachings (session_id, teacher_id, deleted, comments, attended) VALUES (?, ?, ?, ?, ?)] [parameters: (14, 3, 0, None, 0)] (Background on this error at: http://sqlalche.me/e/13/gkpj)
+This is the Copy/Paste friendly version of the traceback. You can also paste this traceback into a gist: 
+
+Traceback (most recent call last):
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1277, in _execute_context
+    cursor, statement, parameters, context
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: teachings.session_id, teachings.teacher_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/app/api/auth/auth_utils.py", line 124, in decorator
+    return fn(*args, **kwargs)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/app/api/course/course.py", line 124, in add_class_session
+    db.session.commit()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/scoping.py", line 163, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 1042, in commit
+    self.transaction.commit()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 504, in commit
+    self._prepare_impl()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 483, in _prepare_impl
+    self.session.flush()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2523, in flush
+    self._flush(objects)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2664, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 69, in __exit__
+    exc_value, with_traceback=exc_tb,
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2624, in _flush
+    flush_context.execute()
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 1083, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1011, in execute
+    return meth(self, multiparams, params)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1130, in _execute_clauseelement
+    distilled_params,
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1317, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1511, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1277, in _execute_context
+    cursor, statement, parameters, context
+  File "/Users/tom.chang/code/dingjun/flaskAPI/.venv/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: teachings.session_id, teachings.teacher_id
+[SQL: INSERT INTO teachings (session_id, teacher_id, deleted, comments, attended) VALUES (?, ?, ?, ?, ?)]
+[parameters: (14, 3, 0, None, 0)]
+(Background on this error at: http://sqlalche.me/e/13/gkpj)
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error. If you enable JavaScript you can also use additional features such as code execution (if the evalex feature is enabled), automatic pasting of the exceptions and much more.
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+Console Locked
+The console is locked and needs to be unlocked by entering the PIN. You can find the PIN printed out on the standard output of your shell that runs the server.
+
+PIN: 
+ 

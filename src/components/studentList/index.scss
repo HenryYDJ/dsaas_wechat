@@ -2,7 +2,7 @@
   display: flex;
 }
 .StudentList{
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -13,7 +13,42 @@
 .scrollWrap{
   flex:1;
   overflow: hidden;
+  background-color: white;
+
+  &.is-card{
+    padding:10px;
+    margin-top:10px;
+  }
 }
 .scrollList{
-  height: 100%;
+  height: calc(100% - 40px);
+}
+.at-card{
+  margin-top: 20px;
+}
+.card-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  .at-button{
+    margin:0;
+  }
+}
+.card-head{
+  display: flex;
+  padding-left: 10px;
+  .searchBar{
+    flex-grow: 1;
+    border-radius: 5px;
+  }
+  .at-button{
+    margin: 0 10px;
+  }
+}
+.bottom{
+  line-height: 40px;
+  text-align: center;
+  background-color: $theme-bg;
+  color: white;
 }

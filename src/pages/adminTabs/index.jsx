@@ -1,7 +1,7 @@
 import Nerv, { Component } from 'nervjs'
 import { View, Text } from '@tarojs/components'
 import './index.scss'
-import { AtTabBar,AtButton,AtList,AtListItem,AtFab }  from 'taro-ui'
+import { AtTabBar,AtButton,AtList,AtListItem,AtFab,AtCard }  from 'taro-ui'
 import Taro from '@tarojs/taro'
 import TeachList from '../../components/teachList'
 import NavBar from '../../components/navbar'
@@ -34,21 +34,19 @@ export default class Admintabs extends Component {
 
   render () {
     return (
-      <View>
+      <View className='page-wrap'>
         <NavBar></NavBar>
-        <View className='adminTabs'>
-        {
-           this.state.current == 0 ? <AtFab className='right-tab' size='small' onClick={this.goAddLessionPage.bind(this)}>
+        <View className='page-body adminTabs'>
+          {/* <AtFab className='right-tab' size='small' onClick={this.goAddLessionPage.bind(this)}>
             <Text className='at-fab__icon at-icon at-icon-add'></Text>
-          </AtFab> : null
-        }
-        <AtList>
+          </AtFab> */}
+        {/* <AtList>
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
           <AtListItem title='课程1'  note='上课老师：张三' arrow='right' />
-        </AtList>
+        </AtList> */}
         <TeachList></TeachList>
-        <AtTabBar
+        {/* <AtTabBar
         tabList={[
           { title: '管理课程', text:12 },
           { title: '管理老师', text: 8 }
@@ -56,7 +54,7 @@ export default class Admintabs extends Component {
         fixed={true}
         onClick={this.handleClick.bind(this)}
         current={this.state.current}
-      />
+      /> */}
       </View>
       </View>
     )

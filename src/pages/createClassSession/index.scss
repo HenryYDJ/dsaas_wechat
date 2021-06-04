@@ -1,0 +1,49 @@
+
+.at-switch__title{
+  font-size: 32px;
+}
+
+.week-checkbox-wrap{
+  .at-checkbox{
+    display:flex;
+    &__option-cnt{
+      position: relative;
+    
+    }
+    .at-icon-check{
+      display: none;
+    }
+    &__icon-cnt{
+      border-radius: 0;
+      width: 60px;
+      height: 60px;
+      margin-right: 0;
+    }
+    &__option-wrap{
+      padding-right:0;
+      padding-left: 0;
+    }
+    &__option{
+      padding:0 16px;
+    }
+    &__title{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      color:#3ab41c;
+      align-items: center;
+      justify-content: center;
+    }
+    }
+  .at-checkbox::before{
+    display: none;
+  }
+  .at-checkbox__option-wrap::after{
+    display: none;
+  }
+  
+  .at-checkbox__option--selected .at-checkbox__title{
+    color:white;
+  }
+}

@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '学生列表',
+  navigationBarTitleText: '管理员申请',
   enableShareAppMessage: true
 }

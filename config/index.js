@@ -1,3 +1,4 @@
+const path = require('path')
 const config = {
   projectName: 'myDemoApp',
   date: '2020-12-17',
@@ -17,6 +18,9 @@ const config = {
     ],
     options: {
     }
+  },
+  sass: {
+    resource: path.resolve(__dirname, '..', 'src/styles/variable.scss')
   },
   framework: 'nerv',
   mini: {

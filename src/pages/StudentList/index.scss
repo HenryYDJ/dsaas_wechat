@@ -1,0 +1,37 @@
+.qrcode{
+  width: 100%;
+}
+.at-article__h2{
+  text-align: center;
+  color: rebeccapurple;
+}
+.at-checkbox {
+display: flex;
+}
+.at-checkbox::after{
+  display: none;
+}
+.at-checkbox::before{
+  display: none;
+}
+.at-checkbox__option-wrap {
+  padding: 0;
+}
+.at-checkbox__option-wrap::after {
+  display: none;
+}
+.at-checkbox__option{
+  padding-left: 0;
+  margin-right: 32px;
+}
+.at-list__item-content {
+  margin-right: 0;
+}
+.part {
+  border:1px dashed #4CAF50;
+  padding: 10px 0 20px;
+  margin-bottom: 10px;
+}
+button{
+  margin: 0 20px;
+}

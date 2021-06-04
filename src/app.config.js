@@ -1,26 +1,42 @@
 export default {
   pages: [
-    'pages/classList/index',
-    'pages/home/index',
     'pages/index/index',
+    'pages/adminTabs/index',
+
+    'pages/bindParent/index',
+
+
+    'pages/createAdmin/index',
+    'pages/studentList/index',
+    'pages/classList/index',
+
+
+
+    'pages/createClassSession/index',
+
+
+    'pages/createTeacher/index',
+    'pages/home/index',
     'pages/studentMain/index',
     'pages/studentSignInClass/index',
-    'pages/studentList/index',
     'pages/classPage/index',
-    'pages/createTeacher/index',
     'pages/createLession/index',
-    'pages/adminTabs/index'
   ],
   tabBar: {
     list: [{
       pagePath: 'pages/home/index',
+      iconPath: 'images/home_df.png',
+      selectedIconPath: 'images/home.png',
       text: '首页'
-    }, {
+    }, 
+    {
       pagePath: 'pages/index/index',
-      text: '我的'
+      text: '我的',
+      iconPath: 'images/user_df.png',
+      selectedIconPath: 'images/user.png',
     }],
     'color': '#000',
-    'selectedColor': '#56abe4',
+    'selectedColor': '#84abf4',
     'backgroundColor': '#fff',
     'borderStyle': 'white'
   },

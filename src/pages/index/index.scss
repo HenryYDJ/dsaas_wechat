@@ -6,6 +6,7 @@
 }
 .user-text{
   display: flex;
+  align-items: flex-start;
   open-data{
     flex-grow: 0;
   }
@@ -13,16 +14,37 @@
 .head-box{
   display: flex;
   align-items: center;
-  margin: 0 10px 10px;
+  margin: 0 30px 10px;
+  font-size: 36px;
+  color: white;
+  text-align: left;
+  background-color: rgba(royalblue,0.7);
+  box-shadow:0px 0px 4px 6px rgba(188,188,188,0.5);
+  border-radius: 5px;
+  padding: 10px;
   image{
-    height:50px;
-    width:50px;
+    height:120px;
+    width:120px;
     border-radius: 100%;
   }
 }
 .user-head{
   width: 120px;
-  margin: 0 auto;
+  margin: 0 20px 0 0;
   overflow: hidden;
   display: flex;
+}
+.at-tag{
+  margin-right:10px;
+}
+.loading-box .at-icon{
+  animation: rotate 2s infinite;
+}
+@keyframes rotate {
+  0%{
+    transform:rotate(0deg)
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }

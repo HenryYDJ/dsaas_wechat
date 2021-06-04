@@ -5,7 +5,8 @@ import { AtForm,AtInput,AtButton,AtList,AtListItem } from "taro-ui"
 import { GENDERS,getGlobalData } from '../../constant'
 import Taro from '@tarojs/taro'
 import NavBar from '../../components/navbar'
-import {API_MAP} from '../../api'
+import {API_MAP,getHeader} from '../../api'
+import {userReady} from '../../utils'
 export default class Createteacher extends Component {
   constructor () {
     super(...arguments)
@@ -13,7 +14,7 @@ export default class Createteacher extends Component {
       name: '',
       phone: '',
       genderChecked: '',
-      isApproved: !!getGlobalData('isApproved')
+      isApproved:  false
     }
   }
 
@@ -21,7 +22,13 @@ export default class Createteacher extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  async componentDidMount () { 
+    await userReady
+    const userRoleInfo = getGlobalData('userRoleInfo')
+    this.setState({
+      isApproved: userRoleInfo.validated == 0 && userRoleInfo.roles == 4
+    })
+  }
 
   componentWillUnmount () { }
 
@@ -30,28 +37,27 @@ export default class Createteacher extends Component {
   componentDidHide () { }
 
   onSubmit (event) {
-    console.log(this.state)
     Taro.request({
       url: API_MAP.create_teacher,
       method: 'post',
+      header: getHeader(),
       data: {
-        realName: this.state.name,
+        real_name: this.state.name,
         phone: this.state.phone
       },
-      success(res){
+      success:(res)=>{
         console.log(res)
         Taro.showToast({
           title:'创建成功',
           icon: 'success'
         })
+        this.setState({isApproved:true})
         // Taro.navigateBack()
       },
       error(err){
         console.log(err)
       }
     })
-    // FIXME -- move to success logic
-    this.setState({isApproved:true})
   }
   onReset (event) {
     this.setState({

@@ -1,8 +1,12 @@
+page{
+  background-color: whitesmoke;
+}
 .swiper-box{
+  color:white;
   swiper-item{
     display: flex;
     align-items: center;
-    background-color: lightgreen;
+    background-color: #84abf4;
     View{
       width: 100%;
       text-align: center;

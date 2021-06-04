@@ -1,13 +1,15 @@
 import Nerv, { Component } from 'nervjs'
-import { View, Text,Button } from '@tarojs/components'
+import { View, Text,Button,ScrollView } from '@tarojs/components'
 import './index.scss'
 import Taro from '@tarojs/taro'
-import { AtGrid,AtCalendar,AtLoadMore,AtList,AtListItem,AtButton,
-  AtModal,AtModalContent,AtModalHeader,AtModalAction,AtIcon,AtCheckbox,AtDrawer } from 'taro-ui'
+import { AtGrid,AtCalendar,AtLoadMore,AtList,AtListItem,AtButton,AtActionSheet,AtActionSheetItem,
+  AtModal,AtModalContent,AtModalHeader,AtModalAction,AtIcon,AtCheckbox,AtDrawer,AtFab } from 'taro-ui'
 import dayjs from 'dayjs';
-import NavBar from '../../components/navbar'
-import {API_MAP} from '../../api'
 import Studentlist from '../../components/studentList'
+import NavBar from '../../components/navbar'
+import {API_MAP,getHeader} from '../../api'
+import { getClassList, getSessionStudents} from '../../utils'
+import { getGlobalData} from '../../constant'
 // const res = await Taro.request(params)
 
 function formatData(data,day){
@@ -15,7 +17,7 @@ function formatData(data,day){
       return {
         ...t,
         time: dayjs(t.start_time).format('A HH:mm') + ' 至 ' 
-        + dayjs(t.start_time).add(t.duration,'hour').format('A HH:mm')
+        + dayjs(t.start_time).add(t.duration,'minutes').format('A HH:mm')
       }
   }).filter(t=>{
     return day ? dayjs(t.start_time).format('YYYY-MM-DD') == day : true
@@ -30,9 +32,7 @@ class ClassCalendar extends Component {
     onSelectDate={this.props.onSelectDate}
     onDayClick={this.props.onDayClick}
     onMonthChange={this.props.onMonthChange}
-    marks={ [ 
-      { value: dayjs().format('YYYY/MM/DD') },
-      { value: dayjs().add(-1,'days').format('YYYY/MM/DD') } ] } />
+    marks={ this.props.hasDataDateList} />
     return  calendar
   }
 }
@@ -58,13 +58,15 @@ class RollModal extends Component {
             <AtModalHeader>{this.props.detail.title}</AtModalHeader>
             <AtModalContent>
               <View className='modal-title'>已报名<AtIcon onClick={this.props.openStudentPage} className='icon-add' value='add' size='20' color='#F00'></AtIcon></View>
+              <ScrollView className='modal-scroll-list' enhanced={true}  scrollY={true} style={{height:'200px'}}>
                 <AtCheckbox
                 options={this.props.detail.checkboxOption}
                 selectedList={this.props.detail.checkedList}
                 onChange={this.props.handleCheck}
               />
+              </ScrollView>
             </AtModalContent>
-            <AtModalAction><Button onClick={this.openConfirm.bind(this)}>点名确认</Button> </AtModalAction>
+            <AtModalAction><Button onClick={this.openConfirm.bind(this)}>点名确认({this.props.detail.checkedList.length}名)</Button> </AtModalAction>
           </AtModal>:null}
           {this.state.isOpened?<AtModal
             isOpened={this.state.isOpened}
@@ -73,7 +75,7 @@ class RollModal extends Component {
             confirmText='确认'
             onClose={ ()=> this.setState({isOpened:false})}
             onCancel={ ()=> this.setState({isOpened:false}) }
-            onConfirm={ this.props.handleConfirm }
+            onConfirm={ ()=> {this.setState({isOpened:false});this.props.handleConfirm()} }
             content='确认点名后将扣除对应学生的课时，且不可再次点名，请确认已正确添加全部上课的学生。'
           />:null}
         </View>
@@ -91,24 +93,25 @@ RollModal.defaultProps = {
 export default class Classlist extends Component {
   constructor(){
     super(...arguments)
-    const data = [
-    {id:1,name:'数学课',start_time:'2021-05-04T17:24:41+08:00',duration:60},
-    {id:1,name:'语文课',start_time:'2021-05-03T13:12:41+08:00',duration:120}
-  ]
-    const list = formatData(data)
+    // const list = formatData(data)
     const today = dayjs()
     this.state = {
       status: 'loading',
       hasData: false,
-      classList: list,
-      currentDayList: formatData(data,today.format('YYYY-MM-DD')),
+      classList: [],
+      currentDayList: [],//formatData(data,today.format('YYYY-MM-DD')),
       selectDate: +today,
       currentMonth: today.format('YYYY-MM'),
+      selectMonth: today.format('YYYY-MM-DD'),
       currentDate: +today,
       changeCanlendar:false,
       lessionDetail: null,
       modalOpened: false,
-      showAddStudent: false
+      showAddStudent: false,
+      hasDataDateList:[],
+      checkedList: [],
+      isOpenAction: false,
+      classDetail: null
     }
   }
 
@@ -116,12 +119,14 @@ export default class Classlist extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-    this.onMonthChange(dayjs().format('YYYY-MM-DD'))
+    // this.onMonthChange(dayjs().format('YYYY-MM-DD'))
+  }
+  componentDidShow(){
+    this.onMonthChange(this.selectMonth)
   }
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
 
   componentDidHide () { }
 
@@ -151,21 +156,45 @@ export default class Classlist extends Component {
     }
   }
 
-  onMonthChange(month) {
-    this.setState({
-      hasData:false,
-      status:'loading',
-      selectDate: this.state.currentMonth == dayjs(month,'YYYY-MM-DD').format('YYYY-MM') ?
-      this.state.currentDate : +dayjs(month,'YYYY-MM-DD'),
-      changeCanlendar:!this.state.changeCanlendar
-    })
-    //FIXME move to success
-    setTimeout(()=>{
+  async onMonthChange(month) {
+    try{
       this.setState({
-        hasData:true,
-        status:'loading' //noMore
+        hasData:false,
+        status:'loading'
       })
-    },2000)
+      const monthDate = dayjs(month,'YYYY-MM-DD')
+      const userRoleInfo = getGlobalData('userRoleInfo')
+      const classList = await getClassList({start_time:monthDate.startOf('month').format(),end_time:monthDate.endOf('month').format()},userRoleInfo.roles == 4)
+      this.setState({
+        classList
+      })
+      console.log(classList)
+      const monthFormat = dayjs(month,'YYYY-MM-DD').format('YYYY-MM')
+      const data = formatData(classList,
+        this.state.currentMonth == monthFormat ? dayjs().format('YYYY-MM-DD') : month)
+      console.log(this.state.classList
+        .filter(t=>monthFormat == dayjs(t.start_time).format('YYYY-MM'))
+        .map(t=>dayjs(t.start_time).format('YYYY/MM/DD')))
+      this.setState({
+        selectDate: this.state.currentMonth == monthFormat ?
+        this.state.currentDate : +dayjs(month,'YYYY-MM-DD'),
+        changeCanlendar:!this.state.changeCanlendar,
+        currentDayList: data,
+        hasDataDateList: classList
+        .filter(t=>monthFormat == dayjs(t.start_time).format('YYYY-MM'))
+        .map(t=>{return {
+          value:dayjs(t.start_time).format('YYYY/MM/DD')}
+        })
+      })
+      this.setState({
+        hasData:data.length,
+        status:data.length?'loading' :'noMore'//noMore
+      })
+    }catch(e){
+      console.log(e)
+    }
+    //FIXME move to success
+    
     // Taro.request({
     //   url: API_MAP.get,
     //   method: 'post',
@@ -187,40 +216,70 @@ export default class Classlist extends Component {
     console.log(info)
   }
 
-  openRollModal(detail) {
-    console.log(detail)
+  openAction(detail) {
+    this.setState({
+      isOpenAction: true,
+      classDetail: detail
+    })
+  }
+
+  async openRollModal() {
+    const detail = this.state.classDetail
+    this.setState({
+      isOpenAction: false
+    })
     // TODO 请求课时学生名单
+    const students = await getSessionStudents(detail.session_id)
+    const list = students.map(t=>t.value)
     const lessionDetail = {
       title: detail.name,
-      checkboxOption: [{
-        value: 'list1',
-        label: '张三',
-        },{
-          value: 'list2',
-          label: '李四'
-        },{
-          value: 'list3',
-          label: '王五',
-        },{
-          value: 'list4',
-          label: '皇后'
-      }],
-      checkedList: ['list1','list3']
+      checkboxOption: students,
+      checkedList: list
     }
     this.setState({
       lessionDetail,
-      modalOpened: true
+      modalOpened: true,
+      orignChecked: list,
+      checkedList: list
     })
   }
 
   handleRollModalCheck(e){
     this.setState({
-      lessionDetail:{...this.state.lessionDetail,checkedList:e}
+      lessionDetail:{...this.state.lessionDetail,checkedList:e},
+      checkedList: e
     })
   }
 
   // 点名提交
   handleConfirmRoll(){
+    const studentsFromDetail = this.state.orignChecked
+    const studentsFromCheck = this.state.lessionDetail.checkedList
+    const students = [...new Set([...studentsFromDetail,...studentsFromCheck])].map(t=>{
+      return {
+        attended: studentsFromCheck.indexOf(t) != -1,
+        student_id: t
+      }
+    })
+      Taro.request({
+        url: API_MAP.attendance_call,
+        header: getHeader(),
+        method: 'post',
+        data: {
+          session_id: this.state.classDetail.session_id,
+          student_ids: students
+        },
+        success:(res)=>{
+          Taro.showToast({
+            title:'点名成功',
+            icon: 'success'
+          })
+          this.onMonthChange(this.selectMonth)
+        },
+        error(err){
+          console.log(err)
+        }
+    })
 
   }
 
@@ -236,8 +295,36 @@ export default class Classlist extends Component {
     })
   }
 
+  createClassSession() {
+    Taro.navigateTo({
+      url: '/pages/createClassSession/index'
+    })
+  }
+  modifyClassSession(){
+    Taro.showToast({
+      title:'修改课时功能还未上线，敬请期待~',
+      icon: 'none'
+    })
+  }
+
+  updateCheckList(checked,list) {
+    this.setState({
+      checkedList:checked,
+      lessionDetail: {...this.state.lessionDetail,
+        checkboxOption: list.filter(t=> checked.indexOf(t.id) > -1)
+        .map(t=> {
+          return {
+            ...t,
+            label:t.name,
+            value:t.id
+          }
+        }),
+        checkedList:checked
+      }
+    })
+  }
+
   render () {
-    console.log(this.state)
     return (
       <View className='ClassList'>
         <NavBar></NavBar>
@@ -248,14 +335,16 @@ export default class Classlist extends Component {
            onDayClick={this.onDayClick.bind(this)}
            onMonthChange={this.onMonthChange.bind(this)}
            changeCanlendar={this.state.changeCanlendar}
+           hasDataDateList={this.state.hasDataDateList}
            ></ClassCalendar>
         </View>
         {this.state.hasData?
           <AtList>
-            {(this.state.currentDayList.map(t=> <AtListItem onClick={this.openRollModal.bind(this,t)} 
+            {(this.state.currentDayList.map(t=> <AtListItem
+            onClick={this.openAction.bind(this,t)}
             title={t.name} 
             note={'上课时间：'+t.time} 
-            extraText='点名'
+            extraText='操作'
             arrow='right' />))}
           </AtList>
           :<AtLoadMore
@@ -274,8 +363,22 @@ export default class Classlist extends Component {
           onClose={()=>this.setState({showAddStudent:false})}
           mask
         >
-          <Studentlist></Studentlist>
+          <Studentlist checkedList={this.state.checkedList} updateCheckList={this.updateCheckList.bind(this)}></Studentlist>
         </AtDrawer>:null}
+        <AtFab className='right-tab' size='small' onClick={this.createClassSession.bind(this)}>
+            <Text className='at-fab__icon at-icon at-icon-add'></Text>
+          </AtFab>
+          {this.state.isOpenAction?<AtActionSheet isOpened={this.state.isOpenAction} cancelText='取消' onClose={()=>this.setState({isOpenAction:false})} title='课时操作'>
+            {this.state.classDetail.attendance_call==false?
+            <><AtActionSheetItem onClick={this.openRollModal.bind(this)}>
+              点名
+            </AtActionSheetItem>
+            <AtActionSheetItem onClick={this.modifyClassSession.bind(this)}>
+               修改课时
+             </AtActionSheetItem>
+             </>
+             :null}
+          </AtActionSheet>:null}
       </View>
     )
   }

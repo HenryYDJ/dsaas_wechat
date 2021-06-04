@@ -11,11 +11,12 @@ export default class NavBar extends Component {
   constructor () {
     super(...arguments)
     const pages = Taro.getCurrentPages()
+    console.log(pages)
     this.state = {
       curNavHeight: (MENU_BTN_INFO.top + MENU_BTN_INFO.height + 10) + 'px',// 加10px间隙
       curMenuBtnHeight: MENU_BTN_INFO.height + 'px', 
       curNavPadTop: MENU_BTN_INFO.top + 'px', 
-      pageName: pages.length ? pages[0].config.navigationBarTitleText: ''
+      pageName: this.props.title ? this.props.title : pages.length ? pages[pages.length-1].config.navigationBarTitleText: ''
     }
   }
 
@@ -62,8 +63,8 @@ export default class NavBar extends Component {
 
   goHome() {
     console.log('返回首页')
-    Taro.reLaunch({
-      url: '/pages/home/index'
+    Taro.switchTab({
+      url: '/pages/index/index'
     })
   }
 
@@ -73,10 +74,10 @@ export default class NavBar extends Component {
         <View style={{height: this.state.curMenuBtnHeight, paddingTop: this.state.curNavPadTop}} className="nav-main">
           <View className="nav-wrapper">
             {this.props.isShowNavLeft?<View className="nav-left" >
-              <View onClick={this.goBack} className="icon-back-wrapper">
+              <View onClick={this.goBack.bind(this,false)} className="icon-back-wrapper">
                 <Image src={backPng} className="icon-back"></Image>
               </View>
-              <View onClick={this.goHome} className="icon-home-wrapper">
+              <View onClick={this.goHome.bind(this,true)} className="icon-home-wrapper">
                 <Image className="icon-home" src={homePng} ></Image>
               </View>
               <View className="center-line"></View>
@@ -94,5 +95,6 @@ export default class NavBar extends Component {
 
 NavBar.defaultProps = {
   isShowNavLeft: true,
-  showTitle: true
+  showTitle: true,
+  title: ''
 }

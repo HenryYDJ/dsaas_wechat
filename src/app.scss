@@ -1,8 +1,8 @@
-$color-brand: #ff4d4d;
+$color-brand: #3ab41c;
 @import "~taro-ui/dist/style/index.scss"; // 引入组件样式，仅需引入一次即可
 
 page{
-  background: #84abf4 no-repeat;
+  background: $theme-bg no-repeat;
   background-size: cover;
 }
 .right-tab{
@@ -20,4 +20,76 @@ page{
   button{
     margin:  0 60px;
   }
+}
+.my-form {
+  .at-input--disabled{
+    opacity: 1;
+  }
+  .at-input__title{
+    white-space: nowrap;
+  }
+}
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.page-wrap{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.page-body{
+  flex:1;
+  overflow: auto;
+}
+.flex{
+  display: flex;
+}
+.space-between{
+  justify-content: space-between;
+}
+.addStudentDrawer{
+  z-index: 1000;
+  .at-drawer__content{
+    background-color: transparent;
+  }
+}
+.approve-list {
+  .at-card__header{
+    justify-content:space-between;
+  }
+  .at-card__header-title{
+    flex:1;
+  }
+  .at-card__header-extra {
+    max-width: none;
+    flex:1 0 auto;
+    text-align: right;
+  }
+}
+
+.extratext-list .at-list__item .item-extra {
+  max-width: none;
+  text-align: left;
+}
+.extratext-list  .at-list__item-container {
+  justify-content: start;
+}
+.extratext-list .at-list {
+  text-align: left;
+  padding:10px 5px;
+}
+.red-tip{
+  color:orangered;
+  text-align: center;
+  padding: 5px;
+}
+.normal-tip{
+  text-align: center;
+  padding: 5px;
+}
+.at-calendar__list.flex .flex__item-extra .extra-marks .mark {
+  color:#E91E63;
 }

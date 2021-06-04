@@ -4,6 +4,7 @@ import './index.scss'
 import {API_MAP} from '../../api'
 import { AtForm,AtInput,AtButton,AtList,AtListItem,AtTextarea } from "taro-ui"
 import Taro from '@tarojs/taro'
+import NavBar from '../../components/navbar'
 export default class Createlession extends Component {
   constructor () {
     super(...arguments)
@@ -59,6 +60,7 @@ export default class Createlession extends Component {
   render () {
     return (
       <View className='createLession'>
+        <NavBar></NavBar>
          <AtForm
         onSubmit={this.onSubmit.bind(this)}
         onReset={this.onReset.bind(this)}
